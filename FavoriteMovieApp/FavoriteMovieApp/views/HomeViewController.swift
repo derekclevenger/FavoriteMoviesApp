@@ -9,44 +9,43 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    var topLabel = UIView()
+    var backgroundImage = UIImageView()
+
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
-    
+        self.view.backgroundColor = UIColor.white
+        setupBackgroundImage()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        layoutSubviews()
+        layoutBackgroundImage()
     }
     
 
+   
+    func setupBackgroundImage() {
+        backgroundImage.image = UIImage(named: "theatre")
+        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(backgroundImage)
+    }
+    
+    func layoutBackgroundImage() {
+        NSLayoutConstraint.activate([
+            backgroundImage.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.75),
+            backgroundImage.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            backgroundImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
+            
+            ])
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        }
-    
-    func setupSubviews(){
-        setupTopLabel()
     }
     
-    func layoutSubviews(){
-        layoutTopLabel()
-    }
-
-    private func setupTopLabel() {
-        topLabel.backgroundColor = UIColor.blue
-        topLabel.translatesAutoresizingMaskIntoConstraints = false
-       self.view.addSubview(topLabel)
-    }
-    
-    private func layoutTopLabel() {
-        NSLayoutConstraint.activate([
-            topLabel.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
-            topLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-            ])
-}
     
    
 }

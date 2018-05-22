@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6508802920B3B59200033626 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6508802820B3B59200033626 /* Default-568h@2x.png */; };
 		659CCC3A20B1154F0086889D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659CCC3920B1154F0086889D /* AppDelegate.swift */; };
 		659CCC3C20B1154F0086889D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659CCC3B20B1154F0086889D /* HomeViewController.swift */; };
 		659CCC4120B115500086889D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659CCC4020B115500086889D /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6508802820B3B59200033626 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		659CCC3620B1154F0086889D /* FavoriteMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavoriteMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659CCC3920B1154F0086889D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		659CCC3B20B1154F0086889D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		659CCC8220B266FF0086889D /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				6508802820B3B59200033626 /* Default-568h@2x.png */,
 				659CCC8320B2672F0086889D /* theatre@2x.png */,
 			);
 			path = resources;
@@ -264,6 +267,7 @@
 			files = (
 				659CCC4120B115500086889D /* Assets.xcassets in Resources */,
 				659CCC8420B2672F0086889D /* theatre@2x.png in Resources */,
+				6508802920B3B59200033626 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
