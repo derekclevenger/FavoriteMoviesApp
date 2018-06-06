@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
     
     func layoutBackgroundImage() {
         NSLayoutConstraint.activate([
-            backgroundImage.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.8),
+            backgroundImage.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
             backgroundImage.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0),
             
@@ -75,34 +75,36 @@ class HomeViewController: UIViewController {
         findMoviesButton.layer.borderWidth = 1
         findMoviesButton.setTitleColor(.white, for: UIControlState())
         
-        view.addSubview(findMoviesButton)
+        backgroundImage.addSubview(findMoviesButton)
     }
     
     func layoutFindMoviesButton() {
         NSLayoutConstraint.activate([
-            findMoviesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            findMoviesButton.topAnchor.constraint(equalTo: myMoviesButton.bottomAnchor),
-            findMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.1)
+            findMoviesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.4),
+            findMoviesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.3),
+            findMoviesButton.topAnchor.constraint(equalTo: myMoviesButton.bottomAnchor, constant: 10.0),
+            findMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08)
             ])
     }
     
     func setupMyMoviesButton() {
         myMoviesButton.translatesAutoresizingMaskIntoConstraints = false
         myMoviesButton.setTitle("My Favorite Movies", for: UIControlState())
-        myMoviesButton.backgroundColor = UIColor.lightGray
+        myMoviesButton.backgroundColor = UIColor.black
         myMoviesButton.layer.borderColor = UIColor.white.cgColor
         myMoviesButton.layer.borderWidth = 1
 
         myMoviesButton.setTitleColor(.white, for: UIControlState())
         
-        view.addSubview(myMoviesButton)
+        backgroundImage.addSubview(myMoviesButton)
     }
     
     func layoutMyMoviesButton() {
         NSLayoutConstraint.activate([
-            myMoviesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
-            myMoviesButton.topAnchor.constraint(equalTo: backgroundImage.bottomAnchor),
-            myMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.1)
+            myMoviesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.6),
+            myMoviesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.2),
+            myMoviesButton.topAnchor.constraint(equalTo: view.topAnchor, constant:UIScreen.main.bounds.height * 0.78),
+            myMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08)
             ])
     }
     override func didReceiveMemoryWarning() {
