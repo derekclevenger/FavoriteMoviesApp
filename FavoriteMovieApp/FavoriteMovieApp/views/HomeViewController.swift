@@ -83,7 +83,7 @@ class HomeViewController: UIViewController {
             findMoviesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.4),
             findMoviesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.3),
             findMoviesButton.topAnchor.constraint(equalTo: myMoviesButton.bottomAnchor, constant: 10.0),
-            findMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08)
+            findMoviesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.075)
             ])
     }
     
@@ -91,7 +91,7 @@ class HomeViewController: UIViewController {
         myMoviesButton.translatesAutoresizingMaskIntoConstraints = false
         myMoviesButton.setTitle("My Favorite Movies", for: UIControlState())
         myMoviesButton.backgroundColor = UIColor.black
-        myMoviesButton.layer.borderColor = UIColor.white.cgColor
+        myMoviesButton.layer.borderColor = UIColor.gray.cgColor
         myMoviesButton.layer.borderWidth = 1
 
         myMoviesButton.setTitleColor(.white, for: UIControlState())
