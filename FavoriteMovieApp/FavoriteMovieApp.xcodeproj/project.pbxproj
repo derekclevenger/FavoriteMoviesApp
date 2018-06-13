@@ -19,6 +19,8 @@
 		659CCC6E20B116B40086889D /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659CCC6D20B116B40086889D /* JSONParser.swift */; };
 		659CCC7020B116DB0086889D /* MovieDataProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659CCC6F20B116DB0086889D /* MovieDataProcessing.swift */; };
 		659CCC8420B2672F0086889D /* theatre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 659CCC8320B2672F0086889D /* theatre@2x.png */; };
+		65BAC0E720D0A63500A0E8E5 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BAC0E620D0A63500A0E8E5 /* CustomTableViewCell.swift */; };
+		65BAC0E920D0A79900A0E8E5 /* FavoriteMoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BAC0E820D0A79900A0E8E5 /* FavoriteMoviesViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		659CCC6D20B116B40086889D /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		659CCC6F20B116DB0086889D /* MovieDataProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDataProcessing.swift; sourceTree = "<group>"; };
 		659CCC8320B2672F0086889D /* theatre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theatre@2x.png"; sourceTree = "<group>"; };
+		65BAC0E620D0A63500A0E8E5 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		65BAC0E820D0A79900A0E8E5 /* FavoriteMoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMoviesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 			children = (
 				659CCC3B20B1154F0086889D /* HomeViewController.swift */,
 				651EE88720CF57D000B18605 /* MovieSearchViewController.swift */,
+				65BAC0E820D0A79900A0E8E5 /* FavoriteMoviesViewController.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 		659CCC8120B266FB0086889D /* tables */ = {
 			isa = PBXGroup;
 			children = (
+				65BAC0E620D0A63500A0E8E5 /* CustomTableViewCell.swift */,
 			);
 			path = tables;
 			sourceTree = "<group>";
@@ -295,8 +301,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65BAC0E920D0A79900A0E8E5 /* FavoriteMoviesViewController.swift in Sources */,
 				659CCC3C20B1154F0086889D /* HomeViewController.swift in Sources */,
 				659CCC6E20B116B40086889D /* JSONParser.swift in Sources */,
+				65BAC0E720D0A63500A0E8E5 /* CustomTableViewCell.swift in Sources */,
 				659CCC3A20B1154F0086889D /* AppDelegate.swift in Sources */,
 				659CCC7020B116DB0086889D /* MovieDataProcessing.swift in Sources */,
 				659CCC6C20B116950086889D /* HttpHandler.swift in Sources */,
