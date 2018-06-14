@@ -5,7 +5,7 @@
 //  Created by Derek Clevenger on 5/19/18.
 //  Copyright © 2018 Derek Clevenger. All rights reserved.
 //
-
+import Foundation
 import UIKit
 
 @UIApplicationMain
@@ -15,13 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        let viewController = HomeViewController(nibName: nil, bundle: nil)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        guard let window = self.window else { fatalError("No window") }
-        window.rootViewController = FavoriteMoviesViewController()
-        window.makeKeyAndVisible()
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
         
         return true
-
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

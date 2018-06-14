@@ -5,7 +5,7 @@
 //  Created by Derek Clevenger on 5/19/18.
 //  Copyright © 2018 Derek Clevenger. All rights reserved.
 //
-
+import Foundation
 import UIKit
 
 class HomeViewController: UIViewController {
@@ -31,8 +31,23 @@ class HomeViewController: UIViewController {
         layoutMyMoviesButton()
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+       
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    @objc func onMyMovies(_ sender: UIButton) {
+        self.navigationController?.pushViewController(FavoriteMoviesViewController(), animated: true)
+    }
    
+    @objc func onFindMovies(_ sender: UIButton) {
+        self.navigationController?.pushViewController(MovieSearchViewController(), animated: true)
+    }
+    
     func setupBackgroundImage() {
         backgroundImage.image = UIImage(named: "theatre")
         backgroundImage.translatesAutoresizingMaskIntoConstraints = false
@@ -68,14 +83,16 @@ class HomeViewController: UIViewController {
     }
     
     func setupFindMoviesButton() {
-        findMoviesButton.translatesAutoresizingMaskIntoConstraints = false
         findMoviesButton.setTitle("Find Movies", for: UIControlState())
         findMoviesButton.backgroundColor = UIColor.lightGray
         findMoviesButton.layer.borderColor = UIColor.white.cgColor
         findMoviesButton.layer.borderWidth = 1
+
         findMoviesButton.setTitleColor(.white, for: UIControlState())
-        
-        backgroundImage.addSubview(findMoviesButton)
+        findMoviesButton.addTarget(self, action: #selector(onFindMovies), for: .touchUpInside)
+        findMoviesButton.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(findMoviesButton)
     }
     
     func layoutFindMoviesButton() {
@@ -88,15 +105,17 @@ class HomeViewController: UIViewController {
     }
     
     func setupMyMoviesButton() {
-        myMoviesButton.translatesAutoresizingMaskIntoConstraints = false
         myMoviesButton.setTitle("My Favorite Movies", for: UIControlState())
         myMoviesButton.backgroundColor = UIColor.black
+        
         myMoviesButton.layer.borderColor = UIColor.gray.cgColor
         myMoviesButton.layer.borderWidth = 1
-
         myMoviesButton.setTitleColor(.white, for: UIControlState())
-        
-        backgroundImage.addSubview(myMoviesButton)
+        myMoviesButton.isEnabled = true
+        myMoviesButton.addTarget(self, action: #selector(onMyMovies), for: .touchUpInside)
+        myMoviesButton.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(myMoviesButton)
     }
     
     func layoutMyMoviesButton() {

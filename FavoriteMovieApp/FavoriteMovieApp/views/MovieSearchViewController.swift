@@ -13,13 +13,40 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     weak var delegate: FavoriteMoviesViewController!
     var searchResults: [Movie] = []
     
-     var searchText: UITextField!
+    var searchTextField = UITextField()
      var tableView: UITableView!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.white
+        setupSearchTextField()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+      layoutSearchTextField()
+    }
+    
+    func setupSearchTextField() {
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(searchTextField)
+
+    }
+    
+    func layoutSearchTextField() {
+        NSLayoutConstraint.activate([
+            searchTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.1),
+            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.05),
+            searchTextField.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.1),
+            searchTextField.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.75)
+            ])
+    }
+    
      func search(sender: UIButton) {
-        print("Searching for \(self.searchText.text!)")
+        print("Searching for \(self.searchTextField.text!)")
         
-        var searchTerm = searchText.text!
+        var searchTerm = searchTextField.text!
         if searchTerm.count > 2 {
             retrieveMoviesByTerm(searchTerm: searchTerm)
         }
@@ -79,9 +106,9 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         }).resume()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
