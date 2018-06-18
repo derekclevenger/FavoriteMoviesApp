@@ -12,24 +12,37 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     weak var delegate: FavoriteMoviesViewController!
     var searchResults: [Movie] = []
+    var tableView: UITableView!
     
     var searchTextField = UITextField()
-     var tableView: UITableView!
+    var searchButton = UIButton()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         setupSearchTextField()
+        setupSearchButton()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-      layoutSearchTextField()
+        layoutSearchTextField()
+        layoutSearchButton()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     
     func setupSearchTextField() {
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
-
+        searchTextField.backgroundColor = UIColor.clear
+        searchTextField.borderStyle = .roundedRect
+        searchTextField.textAlignment = .left
+        searchTextField.layer.borderColor = UIColor.lightGray.cgColor
+    
         view.addSubview(searchTextField)
 
     }
@@ -37,13 +50,35 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     func layoutSearchTextField() {
         NSLayoutConstraint.activate([
             searchTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.1),
-            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.05),
-            searchTextField.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.1),
-            searchTextField.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.75)
+            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0),
+            searchTextField.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08),
+            searchTextField.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.7)
             ])
     }
     
-     func search(sender: UIButton) {
+    func setupSearchButton() {
+        searchButton.setTitle("Search", for: UIControlState())
+        searchButton.backgroundColor = UIColor.lightGray
+        searchButton.layer.borderColor = UIColor.white.cgColor
+        searchButton.layer.borderWidth = 1
+        
+        searchButton.setTitleColor(.white, for: UIControlState())
+        searchButton.addTarget(self, action: #selector(search), for: .touchUpInside)
+        searchButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(searchButton)
+    }
+    
+    func layoutSearchButton() {
+        NSLayoutConstraint.activate([
+            searchButton.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.1),
+            searchButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 5.0),
+            searchButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08),
+            searchButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.25)
+            ])
+    }
+    
+    @objc func search(sender: UIButton) {
         print("Searching for \(self.searchTextField.text!)")
         
         var searchTerm = searchTextField.text!
