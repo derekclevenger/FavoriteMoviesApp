@@ -11,99 +11,138 @@ import UIKit
 import UIKit
 
 class CustomTableViewCell: UITableViewCell {
-    
 
-    
+    var movieImage = UIImageView()
+    var movieTitle = UILabel()
+    var movieYear = UILabel()
+    var containerView = UIView()
+    var favButton = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.addSubview(movieImage)
+        setupViews()
+
+    }
+    
+    private func setupViews() {
+        self.backgroundColor = UIColor.clear
+        setupMovieImage()
+        setupContainerView()
+        setupMovieTitle()
+        setupMovieYear()
+        setupFavButton()
+        setupFavButton()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutMovieImage()
+        layoutContainerView()
+        layoutMovieTitle()
+        layoutMovieYear()
+        layoutFavButton()
+    }
+    
+    func setupMovieImage() {
+        movieImage.contentMode = .scaleAspectFill
+        movieImage.translatesAutoresizingMaskIntoConstraints = false
+        movieImage.clipsToBounds = true
+        
+        contentView.addSubview(movieImage)
+    }
+    
+    func layoutMovieImage() {
+        NSLayoutConstraint.activate([
+            movieImage.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor),
+            movieImage.leadingAnchor.constraint(equalTo:self.contentView.leadingAnchor, constant:10),
+            movieImage.widthAnchor.constraint(equalToConstant:80),
+            movieImage.heightAnchor.constraint(equalToConstant:80)
+            ])
+    }
+    
+    func setupContainerView() {
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.clipsToBounds = true
+        
+        contentView.addSubview(containerView)
+        
+    }
+    
+    func layoutContainerView() {
+        NSLayoutConstraint.activate([
+            containerView.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor),
+            containerView.leadingAnchor.constraint(equalTo:self.movieImage.trailingAnchor, constant:10),
+            containerView.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-20),
+            containerView.heightAnchor.constraint(equalToConstant:90)
+            ])
+    }
+    
+    func setupMovieTitle() {
+        movieTitle.font = UIFont.boldSystemFont(ofSize: 20)
+        movieTitle.textColor =  UIColor(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        
+        movieTitle.translatesAutoresizingMaskIntoConstraints = false
+        
         containerView.addSubview(movieTitle)
+    }
+    
+    func layoutMovieTitle() {
+        NSLayoutConstraint.activate([
+            movieTitle.topAnchor.constraint(equalTo:self.containerView.topAnchor),
+            movieTitle.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor),
+            movieTitle.trailingAnchor.constraint(equalTo:self.containerView.trailingAnchor)
+            ])
+    }
+    
+    func setupMovieYear() {
+        movieYear.font = UIFont.boldSystemFont(ofSize: 14)
+        movieYear.textColor = UIColor(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        movieYear.layer.cornerRadius = 5
+        movieYear.clipsToBounds = true
+        
+        movieYear.translatesAutoresizingMaskIntoConstraints = false
+        
         containerView.addSubview(movieYear)
-        self.contentView.addSubview(containerView)
-        self.contentView.addSubview(favButton)
-        
-        movieImage.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor).isActive = true
-        movieImage.leadingAnchor.constraint(equalTo:self.contentView.leadingAnchor, constant:10).isActive = true
-        movieImage.widthAnchor.constraint(equalToConstant:80).isActive = true
-        movieImage.heightAnchor.constraint(equalToConstant:80).isActive = true
-        
-        containerView.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor).isActive = true
-        containerView.leadingAnchor.constraint(equalTo:self.movieImage.trailingAnchor, constant:10).isActive = true
-        containerView.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-20).isActive = true
-        containerView.heightAnchor.constraint(equalToConstant:90).isActive = true
-        
-        movieTitle.topAnchor.constraint(equalTo:self.containerView.topAnchor).isActive = true
-        movieTitle.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor).isActive = true
-        movieTitle.trailingAnchor.constraint(equalTo:self.containerView.trailingAnchor).isActive = true
-
-
-        movieYear.topAnchor.constraint(equalTo:self.movieTitle.bottomAnchor, constant: 5.0).isActive = true
-        movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor).isActive = true
-        //movieYear.topAnchor.constraint(equalTo:self.movieTitle.bottomAnchor).isActive = true
-        movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor).isActive = true
-
-
-        favButton.widthAnchor.constraint(equalToConstant:60).isActive = true
-        favButton.heightAnchor.constraint(equalToConstant:36).isActive = true
-        favButton.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-20).isActive = true
-        favButton.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor).isActive = true
-        favButton.topAnchor.constraint(equalTo: movieTitle.bottomAnchor, constant: 5.0).isActive = true
-
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
+    func layoutMovieYear() {
+        NSLayoutConstraint.activate([
+            movieYear.topAnchor.constraint(equalTo:self.movieTitle.bottomAnchor, constant: 5.0),
+            movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor),
+            movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor)
+            ])
     }
     
-    let movieImage : UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFill
-        img.translatesAutoresizingMaskIntoConstraints = false 
-        img.clipsToBounds = true
-        return img
-    }()
+   
     
-    let movieTitle:UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor =  UIColor(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-       
-        return label
-    }()
-    
-    let movieYear:UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.textColor = UIColor(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        label.layer.cornerRadius = 5
-        label.clipsToBounds = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let containerView:UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true // this will make sure its children do not go out of the boundary
-        return view
-    }()
-    
-    let favButton:UIButton = {
-        let favButton = UIButton()
-        favButton.backgroundColor = UIColor.lightGray
+    func  setupFavButton() {
+        favButton.backgroundColor = UIColor.cyan        
         favButton.setTitle("fav", for: UIControlState())
         favButton.layer.borderColor = UIColor.gray.cgColor
         favButton.layer.borderWidth = 1
         favButton.setTitleColor(.white, for: UIControlState())
         favButton.isEnabled = true
-
+        
         favButton.translatesAutoresizingMaskIntoConstraints = false
-        return favButton
-    }()
+        
+        contentView.addSubview(favButton)
+    }
+    
+    func layoutFavButton() {
+        NSLayoutConstraint.activate([
+            favButton.widthAnchor.constraint(equalToConstant:60),
+            favButton.heightAnchor.constraint(equalToConstant:36),
+            favButton.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-20),
+            favButton.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor),
+            favButton.topAnchor.constraint(equalTo: movieTitle.bottomAnchor, constant: 5.0)
+            ])
+    }
     
   
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        super.init(coder: aDecoder)
+    }
     
 }

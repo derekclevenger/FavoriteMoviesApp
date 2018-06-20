@@ -10,7 +10,7 @@ import UIKit
 
 class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    weak var delegate: FavoriteMoviesViewController!
+    var delegate: FavoriteMoviesViewController!
     var searchResults: [Movie] = []
     var movieSearchTableView = UITableView()
     
@@ -60,7 +60,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setupSearchButton() {
         searchButton.setTitle("Search", for: UIControlState())
-        searchButton.backgroundColor = UIColor.lightGray
+        searchButton.backgroundColor = UIColor.blue
         searchButton.layer.borderColor = UIColor.white.cgColor
         searchButton.layer.borderWidth = 1
         
@@ -111,6 +111,8 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     @objc func addFav (sender: UIButton) {
         print("Item #\(sender.tag) was selected as a favorite")
+        let newMovie = searchResults[sender.tag]
+        print(delegate!)
         self.delegate.favoriteMovies.append(searchResults[sender.tag])
     }
     
@@ -119,15 +121,10 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 200.0
-//    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        // at init/appear ... this runs for each visible cell that needs to render
-//
-        let moviecell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! CustomTableViewCell
 
+        let moviecell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! CustomTableViewCell
+        moviecell.favButton.addTarget(self, action: #selector(addFav), for: .touchUpInside)
         let idx: Int = indexPath.row
         moviecell.favButton.tag = idx
         //title
