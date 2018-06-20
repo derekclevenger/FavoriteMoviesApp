@@ -12,23 +12,25 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     weak var delegate: FavoriteMoviesViewController!
     var searchResults: [Movie] = []
-    var tableView: UITableView!
+    var movieSearchTableView = UITableView()
     
     var searchTextField = UITextField()
     var searchButton = UIButton()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         setupSearchTextField()
         setupSearchButton()
+        setupMovieSearchTableView()
+
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutSearchTextField()
         layoutSearchButton()
+        layoutMovieSearchTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,16 +80,36 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
             ])
     }
     
+
+    
+    func setupMovieSearchTableView() {
+        movieSearchTableView.dataSource = self
+
+        movieSearchTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "customcell")
+        movieSearchTableView.translatesAutoresizingMaskIntoConstraints = false
+        movieSearchTableView.rowHeight = 100.0
+        view.addSubview(movieSearchTableView)
+    }
+    
+    func layoutMovieSearchTableView() {
+        NSLayoutConstraint.activate([
+            movieSearchTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 5.0),
+           movieSearchTableView.leftAnchor.constraint(equalTo:view.leftAnchor),
+           movieSearchTableView.rightAnchor.constraint(equalTo:view.rightAnchor),
+            movieSearchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ])
+    }
+    
     @objc func search(sender: UIButton) {
         print("Searching for \(self.searchTextField.text!)")
         
-        var searchTerm = searchTextField.text!
+        let searchTerm = searchTextField.text!
         if searchTerm.count > 2 {
             retrieveMoviesByTerm(searchTerm: searchTerm)
         }
     }
     
-    func addFav (sender: UIButton) {
+    @objc func addFav (sender: UIButton) {
         print("Item #\(sender.tag) was selected as a favorite")
         self.delegate.favoriteMovies.append(searchResults[sender.tag])
     }
@@ -96,36 +118,34 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         return searchResults.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Search Results"
-    }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // grouped vertical sections of the tableview
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.1
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 200.0
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // at init/appear ... this runs for each visible cell that needs to render
+//        // at init/appear ... this runs for each visible cell that needs to render
+//
         let moviecell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! CustomTableViewCell
-        
+
         let idx: Int = indexPath.row
         moviecell.favButton.tag = idx
-        
         //title
-        moviecell.movieTitle?.text = searchResults[idx].title
+        moviecell.movieTitle.text = searchResults[idx].title
         //year
-        moviecell.movieYear?.text = searchResults[idx].year
+        moviecell.movieYear.text = searchResults[idx].year
+        
+        moviecell.favButton.addTarget(self, action: #selector(addFav), for: .touchUpInside)
+
         // image
         displayMovieImage(idx, movieCell: moviecell)
-        
+
         return moviecell
+
     }
-    
+
+
+   
     func displayMovieImage(_ row: Int, movieCell: CustomTableViewCell) {
         let url: String = (URL(string: searchResults[row].imageUrl)?.absoluteString)!
         URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { (data, response, error) -> Void in
@@ -136,14 +156,10 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
             
             DispatchQueue.main.async(execute: {
                 let image = UIImage(data: data!)
-                movieCell.movieImageView?.image = image
+                movieCell.movieImage.image = image
             })
         }).resume()
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -151,7 +167,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func retrieveMoviesByTerm(searchTerm: String) {
-        let url = "http://www.omdbapi.com/?i=tt3896198&apikey=9b0cb7f4&s=\(searchTerm)&type=movie&r=json"
+        let url = "https://www.omdbapi.com/?i=tt3896198&apikey=9b0cb7f4&s=\(searchTerm)&type=movie&r=json"
         HTTPHandler.getJson(urlString: url, completionHandler: parseDataIntoMovies)
     }
     
@@ -161,7 +177,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
             if let object = object {
                 self.searchResults = MovieDataProcessing.mapJsonToMovies(object: object, moviesKey: "Search")
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self.movieSearchTableView.reloadData()
                 }
             }
         }
