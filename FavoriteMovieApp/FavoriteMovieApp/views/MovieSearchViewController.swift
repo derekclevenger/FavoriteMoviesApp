@@ -10,7 +10,7 @@ import UIKit
 
 class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var delegate: FavoriteMoviesViewController!
+    var delegate = FavoriteMoviesViewController()
     var searchResults: [Movie] = []
     var movieSearchTableView = UITableView()
     
@@ -111,8 +111,6 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     @objc func addFav (sender: UIButton) {
         print("Item #\(sender.tag) was selected as a favorite")
-        let newMovie = searchResults[sender.tag]
-        print(delegate!)
         self.delegate.favoriteMovies.append(searchResults[sender.tag])
     }
     
