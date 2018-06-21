@@ -13,17 +13,17 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     var delegate = FavoriteMoviesViewController()
     var searchResults: [Movie] = []
     var movieSearchTableView = UITableView()
-    
     var searchTextField = UITextField()
     var searchButton = UIButton()
-    
+    var goToFavoritesButton = UIButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         setupSearchTextField()
         setupSearchButton()
         setupMovieSearchTableView()
-
+        setupGoToFavoritesButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -31,6 +31,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         layoutSearchTextField()
         layoutSearchButton()
         layoutMovieSearchTableView()
+        layoutGoToFavoritesButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,10 +95,36 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     func layoutMovieSearchTableView() {
         NSLayoutConstraint.activate([
             movieSearchTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 5.0),
-           movieSearchTableView.leftAnchor.constraint(equalTo:view.leftAnchor),
-           movieSearchTableView.rightAnchor.constraint(equalTo:view.rightAnchor),
+            movieSearchTableView.leftAnchor.constraint(equalTo:view.leftAnchor),
+            movieSearchTableView.rightAnchor.constraint(equalTo:view.rightAnchor),
             movieSearchTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
+    }
+    
+    func setupGoToFavoritesButton() {
+        goToFavoritesButton.setTitle("Go To Favorites", for: UIControlState())
+        goToFavoritesButton.backgroundColor = UIColor.lightGray
+        
+        goToFavoritesButton.layer.borderColor = UIColor.gray.cgColor
+        goToFavoritesButton.layer.borderWidth = 1
+        goToFavoritesButton.setTitleColor(.white, for: UIControlState())
+        goToFavoritesButton.isEnabled = true
+        goToFavoritesButton.addTarget(self, action: #selector(goToFavorites), for: .touchUpInside)
+        goToFavoritesButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        movieSearchTableView.tableFooterView = goToFavoritesButton
+    }
+    
+    func layoutGoToFavoritesButton() {
+        NSLayoutConstraint.activate([
+            goToFavoritesButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            goToFavoritesButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            goToFavoritesButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08)
+            ])
+    }
+    
+    @objc func goToFavorites(_ sender: UIButton) {
+        self.navigationController?.pushViewController(delegate, animated: true)
     }
     
     @objc func search(sender: UIButton) {
