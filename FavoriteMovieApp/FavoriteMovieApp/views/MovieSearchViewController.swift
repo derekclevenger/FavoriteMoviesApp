@@ -47,21 +47,20 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         searchTextField.layer.borderColor = UIColor.lightGray.cgColor
     
         view.addSubview(searchTextField)
-
     }
     
     func layoutSearchTextField() {
         NSLayoutConstraint.activate([
             searchTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.1),
             searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5.0),
-            searchTextField.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08),
+            searchTextField.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.07),
             searchTextField.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.7)
             ])
     }
     
     func setupSearchButton() {
         searchButton.setTitle("Search", for: UIControlState())
-        searchButton.backgroundColor = UIColor.blue
+        searchButton.backgroundColor =  UIColor(hexString: "#00aced")
         searchButton.layer.borderColor = UIColor.white.cgColor
         searchButton.layer.borderWidth = 1
         
@@ -76,7 +75,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         NSLayoutConstraint.activate([
             searchButton.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.1),
             searchButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 5.0),
-            searchButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08),
+            searchButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.07),
             searchButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.25)
             ])
     }
