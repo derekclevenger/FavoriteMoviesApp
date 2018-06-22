@@ -107,8 +107,7 @@ class CustomTableViewCell: UITableViewCell {
     
     func layoutMovieYear() {
         NSLayoutConstraint.activate([
-            movieYear.topAnchor.constraint(equalTo:self.movieTitle.bottomAnchor, constant: 5.0),
-            movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor),
+            movieYear.topAnchor.constraint(equalTo:self.movieTitle.bottomAnchor, constant: 13.0),
             movieYear.leadingAnchor.constraint(equalTo:self.containerView.leadingAnchor)
             ])
     }
