@@ -102,8 +102,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setupGoToFavoritesButton() {
         goToFavoritesButton.setTitle("Go To Favorites", for: UIControlState())
-        goToFavoritesButton.backgroundColor = UIColor.lightGray
-        
+        goToFavoritesButton.backgroundColor = UIColor(hexString: "#00aced")
         goToFavoritesButton.layer.borderColor = UIColor.gray.cgColor
         goToFavoritesButton.layer.borderWidth = 1
         goToFavoritesButton.setTitleColor(.white, for: UIControlState())
@@ -129,15 +128,27 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     @objc func search(sender: UIButton) {
         print("Searching for \(self.searchTextField.text!)")
         
-        let searchTerm = searchTextField.text!
+        let searchTerm = searchTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if searchTerm.count > 2 {
             retrieveMoviesByTerm(searchTerm: searchTerm)
         }
     }
     
     @objc func addFav (sender: UIButton) {
-        print("Item #\(sender.tag) was selected as a favorite")
-        self.delegate.favoriteMovies.append(searchResults[sender.tag])
+        
+        let isAdded = sender.titleLabel?.text == Globals.FAIcon(withName: .plusCircle)
+        self.setAddedState(isAdded: isAdded, sender: sender)
+    }
+    
+    func setAddedState(isAdded: Bool, sender: UIButton) {
+        sender.setTitle(isAdded ? Globals.FAIcon(withName: .checkCircle) : Globals.FAIcon(withName: .plusCircle), for: UIControlState())
+        sender.setTitleColor(isAdded ? UIColor(hexString: "#00aced") : UIColor.lightGray, for: UIControlState())
+        if isAdded {
+            delegate.favoriteMovies.append(searchResults[sender.tag])
+        }
+        if !isAdded {
+            delegate.favoriteMovies = delegate.favoriteMovies.filter {$0.id != searchResults[sender.tag].id}
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

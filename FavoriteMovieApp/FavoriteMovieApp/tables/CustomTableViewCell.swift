@@ -16,7 +16,7 @@ class CustomTableViewCell: UITableViewCell {
     var movieTitle = UILabel()
     var movieYear = UILabel()
     var containerView = UIView()
-    var favButton = UIButton()
+    var favButton = AddToFavoritesButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -116,11 +116,7 @@ class CustomTableViewCell: UITableViewCell {
    
     
     func  setupFavButton() {
-        favButton.backgroundColor = UIColor.cyan        
-        favButton.setTitle("fav", for: UIControlState())
-        favButton.layer.borderColor = UIColor.gray.cgColor
-        favButton.layer.borderWidth = 1
-        favButton.setTitleColor(.white, for: UIControlState())
+        favButton.setTitle(Globals.FAIcon(withName: .plusCircle), for: UIControlState())
         favButton.isEnabled = true
         
         favButton.translatesAutoresizingMaskIntoConstraints = false
