@@ -1,27 +1,25 @@
 //
-//  CustomTableViewCell.swift
+//  FavoriteMovieTableViewCell.swift
 //  FavoriteMovieApp
 //
-//  Created by Derek Clevenger on 6/12/18.
+//  Created by Derek Clevenger on 6/22/18.
 //  Copyright © 2018 Derek Clevenger. All rights reserved.
 //
 
 import UIKit
 
-import UIKit
-
-class CustomTableViewCell: UITableViewCell {
+class FavoriteMovieTableViewCell: UITableViewCell {
 
     var movieImage = UIImageView()
     var movieTitle = UILabel()
     var movieYear = UILabel()
     var containerView = UIView()
-    var favButton = AddToFavoritesButton()
+   
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-
+        
     }
     
     private func setupViews() {
@@ -30,8 +28,7 @@ class CustomTableViewCell: UITableViewCell {
         setupContainerView()
         setupMovieTitle()
         setupMovieYear()
-        setupFavButton()
-        setupFavButton()
+       
     }
     
     override func layoutSubviews() {
@@ -40,7 +37,7 @@ class CustomTableViewCell: UITableViewCell {
         layoutContainerView()
         layoutMovieTitle()
         layoutMovieYear()
-        layoutFavButton()
+       
     }
     
     func setupMovieImage() {
@@ -112,28 +109,6 @@ class CustomTableViewCell: UITableViewCell {
             ])
     }
     
-   
-    
-    func  setupFavButton() {
-        favButton.setTitle(Globals.FAIcon(withName: .plusCircle), for: UIControlState())
-        favButton.isEnabled = true
-        
-        favButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        contentView.addSubview(favButton)
-    }
-    
-    func layoutFavButton() {
-        NSLayoutConstraint.activate([
-            favButton.widthAnchor.constraint(equalToConstant:60),
-            favButton.heightAnchor.constraint(equalToConstant:36),
-            favButton.trailingAnchor.constraint(equalTo:self.contentView.trailingAnchor, constant:-20),
-            favButton.centerYAnchor.constraint(equalTo:self.contentView.centerYAnchor),
-            favButton.topAnchor.constraint(equalTo: movieTitle.bottomAnchor, constant: 5.0)
-            ])
-    }
-    
-  
     
     required init?(coder aDecoder: NSCoder) {
         

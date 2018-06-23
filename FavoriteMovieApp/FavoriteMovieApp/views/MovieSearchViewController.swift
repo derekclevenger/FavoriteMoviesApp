@@ -85,7 +85,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     func setupMovieSearchTableView() {
         movieSearchTableView.dataSource = self
 
-        movieSearchTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "customcell")
+        movieSearchTableView.register(MovieSearchTableViewCell.self, forCellReuseIdentifier: "customcell")
         movieSearchTableView.translatesAutoresizingMaskIntoConstraints = false
         movieSearchTableView.rowHeight = 100.0
         view.addSubview(movieSearchTableView)
@@ -158,7 +158,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let moviecell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! CustomTableViewCell
+        let moviecell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath) as! MovieSearchTableViewCell
         moviecell.favButton.addTarget(self, action: #selector(addFav), for: .touchUpInside)
         let idx: Int = indexPath.row
         moviecell.favButton.tag = idx
@@ -178,7 +178,7 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
 
 
    
-    func displayMovieImage(_ row: Int, movieCell: CustomTableViewCell) {
+    func displayMovieImage(_ row: Int, movieCell: MovieSearchTableViewCell) {
         let url: String = (URL(string: searchResults[row].imageUrl)?.absoluteString)!
         URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { (data, response, error) -> Void in
             if error != nil {
