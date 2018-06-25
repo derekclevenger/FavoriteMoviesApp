@@ -16,7 +16,9 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     var searchTextField = UITextField()
     var searchButton = UIButton()
     var goToFavoritesButton = UIButton()
-
+    var isAdded = false
+    var buttonTracking: [Any] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -80,8 +82,6 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
             ])
     }
     
-
-    
     func setupMovieSearchTableView() {
         movieSearchTableView.dataSource = self
 
@@ -127,29 +127,40 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     
     @objc func search(sender: UIButton) {
         print("Searching for \(self.searchTextField.text!)")
-        
+       
         let searchTerm = searchTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if searchTerm.count > 2 {
+            if buttonTracking.count > 0 {
+                for sender in buttonTracking {
+                    setAddedState(isAdded: false, sender: sender as! UIButton)
+                }
+            }
             retrieveMoviesByTerm(searchTerm: searchTerm)
         }
     }
     
     @objc func addFav (sender: UIButton) {
-        
-        let isAdded = sender.titleLabel?.text == Globals.FAIcon(withName: .plusCircle)
-        self.setAddedState(isAdded: isAdded, sender: sender)
+        isAdded = sender.titleLabel?.text == Globals.FAIcon(withName: .plusCircle)
+        setAddedState(isAdded: isAdded, sender: sender)
+        updateFavoriteMovies(isAdded: isAdded, sender: sender)
     }
     
     func setAddedState(isAdded: Bool, sender: UIButton) {
         sender.setTitle(isAdded ? Globals.FAIcon(withName: .checkCircle) : Globals.FAIcon(withName: .plusCircle), for: UIControlState())
         sender.setTitleColor(isAdded ? UIColor(hexString: "#00aced") : UIColor.lightGray, for: UIControlState())
+       
+    }
+    
+    func updateFavoriteMovies(isAdded: Bool, sender: UIButton) {
         if isAdded {
             delegate.favoriteMovies.append(searchResults[sender.tag])
+            buttonTracking.append(sender)
         }
         if !isAdded {
             delegate.favoriteMovies = delegate.favoriteMovies.filter {$0.id != searchResults[sender.tag].id}
         }
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResults.count
@@ -162,18 +173,12 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
         moviecell.favButton.addTarget(self, action: #selector(addFav), for: .touchUpInside)
         let idx: Int = indexPath.row
         moviecell.favButton.tag = idx
-        //title
         moviecell.movieTitle.text = searchResults[idx].title
-        //year
         moviecell.movieYear.text = searchResults[idx].year
-        
         moviecell.favButton.addTarget(self, action: #selector(addFav), for: .touchUpInside)
-
-        // image
         displayMovieImage(idx, movieCell: moviecell)
 
         return moviecell
-
     }
 
 
