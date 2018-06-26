@@ -18,10 +18,13 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     var goToFavoritesButton = UIButton()
     var isAdded = false
     var buttonTracking: [Any] = []
+    let databaseManagement = DatabaseManagement()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        //databaseManagement.openDatabase()
+        databaseManagement.createTable()
         setupSearchTextField()
         setupSearchButton()
         setupMovieSearchTableView()
