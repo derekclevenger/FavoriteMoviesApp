@@ -10,12 +10,16 @@ import UIKit
 
 class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var db = DatabaseManagement()
     var favoriteMovies: [Movie] = []
      var favoriteMovieTableView = UITableView()
     var goToFavoritesSearchButton = UIButton()
+   
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        favoriteMovies = db.getAllQuery(tableName: "Movies")
+//        print("Id \(favoriteMovies[1].id), title: \(favoriteMovies[1].title), year: \(favoriteMovies[1].year), imageUrl: \(favoriteMovies[1].imageUrl)")
         self.view.backgroundColor = UIColor.white
         setupFavoriteMovieTableView()
         setupGoToFavoritesSearchButton()
@@ -23,6 +27,7 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+       
         layoutFavoriteMovieTableView()
         layoutGoToFavoritesSearchButton()
     }
@@ -106,14 +111,20 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     override func viewWillAppear(_ animated: Bool) {
-       // mainTableView.reloadData()
-        if favoriteMovies.count == 0{
-            favoriteMovies.append(Movie(id: "tt0372784", title: "Batman Begins" , year: "2005", imageUrl: "https://vignette3.wikia.nocookie.net/batman/images/b/b2/Batman-begins_15.jpg/revision/latest/scale-to-width-down/2000?cb=20160913155903" ))
-        }
+       
         super.viewWillAppear(animated)
     }
-
-   // private var myTableView: UITableView!
+    
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            favoriteMovies.remove(at: indexPath.row)
+            //print(favoriteMovies[indexPath.row].id)
+            db.delete(id: favoriteMovies[indexPath.row].id)
+            print(favoriteMovies[indexPath.row].id)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+        }
+    }
     
 
 }

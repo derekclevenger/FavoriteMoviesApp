@@ -13,9 +13,11 @@ class HomeViewController: UIViewController {
     var titleLabel = UILabel()
     var findMoviesButton = UIButton()
     var myMoviesButton = UIButton()
+    let databaseManagement = DatabaseManagement()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        databaseManagement.createTable()
         self.view.backgroundColor = UIColor.white
         setupBackgroundImage()
         setupTitleLabel()

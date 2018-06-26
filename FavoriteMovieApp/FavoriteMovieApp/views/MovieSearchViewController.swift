@@ -19,12 +19,12 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     var isAdded = false
     var buttonTracking: [Any] = []
     let databaseManagement = DatabaseManagement()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        //databaseManagement.openDatabase()
-        databaseManagement.createTable()
+      
         setupSearchTextField()
         setupSearchButton()
         setupMovieSearchTableView()
@@ -151,12 +151,12 @@ class MovieSearchViewController: UIViewController, UITableViewDelegate, UITableV
     func setAddedState(isAdded: Bool, sender: UIButton) {
         sender.setTitle(isAdded ? Globals.FAIcon(withName: .checkCircle) : Globals.FAIcon(withName: .plusCircle), for: UIControlState())
         sender.setTitleColor(isAdded ? UIColor(hexString: "#00aced") : UIColor.lightGray, for: UIControlState())
-       
     }
     
     func updateFavoriteMovies(isAdded: Bool, sender: UIButton) {
         if isAdded {
-            delegate.favoriteMovies.append(searchResults[sender.tag])
+           // delegate.favoriteMovies.append(searchResults[sender.tag])
+            databaseManagement.insert(movie: searchResults[sender.tag])
             buttonTracking.append(sender)
         }
         if !isAdded {
