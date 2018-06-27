@@ -7,13 +7,18 @@
 //
 import Foundation
 import UIKit
+import CoreGraphics
+
+
 
 class HomeViewController: UIViewController {
     var backgroundImage = UIImageView()
     var titleLabel = UILabel()
     var findMoviesButton = UIButton()
     var myMoviesButton = UIButton()
+    var titleLogo = AddToFavoritesButton()
     let databaseManagement = DatabaseManagement()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +26,7 @@ class HomeViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         setupBackgroundImage()
         setupTitleLabel()
+        setupTitleLogo()
         setupFindMoviesButton()
         setupMyMoviesButton()
     }
@@ -29,6 +35,7 @@ class HomeViewController: UIViewController {
         super.viewDidLayoutSubviews()
         layoutBackgroundImage()
         layoutTitleLabel()
+        layoutTitleLogo()
         layoutFindMoviesButton()
         layoutMyMoviesButton()
     }
@@ -50,7 +57,7 @@ class HomeViewController: UIViewController {
     }
     
     func setupBackgroundImage() {
-        backgroundImage.image = UIImage(named: "theatre")
+        backgroundImage.image = UIImage(named: "friendsMovie")
         backgroundImage.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(backgroundImage)
@@ -65,10 +72,28 @@ class HomeViewController: UIViewController {
             ])
     }
     
+    func setupTitleLogo() {
+        titleLogo.translatesAutoresizingMaskIntoConstraints = false
+        titleLogo.layer.masksToBounds = true
+        titleLogo.setTitle(Globals.FAIcon(withName: .film), for: UIControlState())
+        titleLogo.setTitleColor(.white, for: UIControlState())
+       
+        backgroundImage.addSubview(titleLogo)
+
+    }
+    
+    func layoutTitleLogo() {
+        NSLayoutConstraint.activate([
+            titleLogo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.125),
+            titleLogo.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.75),
+            titleLogo.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0.05),
+            ])
+    }
+    
     func setupTitleLabel() {
-        titleLabel.text = "Favorite Movies App"
-        titleLabel.font = UIFont(name: "ArialMT", size: 55)
-        titleLabel.numberOfLines = 3
+        titleLabel.text = "Favorite Movies"
+        titleLabel.font = UIFont(name: "ArialMT", size: 24)
+        titleLabel.textColor = UIColor.white
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -79,7 +104,7 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: UIScreen.main.bounds.width * 0.125),
             titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.75),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.15),
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.main.bounds.height * 0.04),
             ])
     }
     

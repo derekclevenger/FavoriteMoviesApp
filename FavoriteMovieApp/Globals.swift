@@ -23,4 +23,9 @@ struct Globals {
     static func FAIcon(withCode code: String) -> String {
         return String.fontAwesomeIcon(code: code) ?? ""
     }
+    
+    static func regularFont(ofSize size: CGFloat) -> UIFont {
+        return UIFont(name: "GillSans", size: size)!
+    }
+
 }

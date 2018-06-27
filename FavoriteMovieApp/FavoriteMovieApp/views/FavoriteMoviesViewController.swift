@@ -19,15 +19,15 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         favoriteMovies = db.getAllQuery(tableName: "Movies")
-//        print("Id \(favoriteMovies[1].id), title: \(favoriteMovies[1].title), year: \(favoriteMovies[1].year), imageUrl: \(favoriteMovies[1].imageUrl)")
         self.view.backgroundColor = UIColor.white
         setupFavoriteMovieTableView()
         setupGoToFavoritesSearchButton()
+        favoriteMovieTableView.reloadData()
+
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-       
         layoutFavoriteMovieTableView()
         layoutGoToFavoritesSearchButton()
     }
@@ -37,21 +37,8 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
         
         favoriteMovieTableView.register(FavoriteMovieTableViewCell.self, forCellReuseIdentifier: "customcell")
         favoriteMovieTableView.translatesAutoresizingMaskIntoConstraints = false
-        favoriteMovieTableView.rowHeight = 105.0
+        favoriteMovieTableView.rowHeight = 100.0
         view.addSubview(favoriteMovieTableView)
-    }
-    
-    func setupGoToFavoritesSearchButton() {
-        goToFavoritesSearchButton.setTitle("Search Favorites!", for: UIControlState())
-        goToFavoritesSearchButton.backgroundColor = UIColor(hexString: "#00aced")
-        goToFavoritesSearchButton.layer.borderColor = UIColor.gray.cgColor
-        goToFavoritesSearchButton.layer.borderWidth = 1
-        goToFavoritesSearchButton.setTitleColor(.white, for: UIControlState())
-        goToFavoritesSearchButton.isEnabled = true
-        goToFavoritesSearchButton.addTarget(self, action: #selector(goToFavoritesSearch), for: .touchUpInside)
-        goToFavoritesSearchButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        favoriteMovieTableView.tableFooterView = goToFavoritesSearchButton
     }
     
     func layoutFavoriteMovieTableView() {
@@ -63,6 +50,20 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
             ])
     }
     
+    func setupGoToFavoritesSearchButton() {
+        goToFavoritesSearchButton.setTitle("Search Favorites", for: UIControlState())
+        goToFavoritesSearchButton.backgroundColor = UIColor(hexString: "#00aced")
+        goToFavoritesSearchButton.layer.borderColor = UIColor.gray.cgColor
+        goToFavoritesSearchButton.layer.borderWidth = 1
+        goToFavoritesSearchButton.setTitleColor(.white, for: UIControlState())
+        goToFavoritesSearchButton.isEnabled = true
+        goToFavoritesSearchButton.addTarget(self, action:  #selector(goToFavoritesSearch), for: .touchUpInside)
+        goToFavoritesSearchButton.translatesAutoresizingMaskIntoConstraints = false
+        favoriteMovieTableView.tableFooterView = goToFavoritesSearchButton
+        
+        }
+    
+  
     func layoutGoToFavoritesSearchButton() {
         NSLayoutConstraint.activate([
             goToFavoritesSearchButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
@@ -70,6 +71,8 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
             goToFavoritesSearchButton.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.08)
             ])
     }
+    
+    
     
     @objc func goToFavoritesSearch(_ sender: UIButton) {
         self.navigationController?.pushViewController(MovieSearchViewController(), animated: true)
@@ -90,7 +93,6 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
         
         // image
         displayMovieImage(idx, moviecell: moviecell)
-        
         return moviecell
 
     }
@@ -102,22 +104,23 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
                 print(error!)
                 return
             }
-
             DispatchQueue.main.async(execute: {
                 let image = UIImage(data: data!)
                 moviecell.movieImage.image = image
+
             })
         }).resume()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
-       
         super.viewWillAppear(animated)
+        self.favoriteMovieTableView.reloadData()
+
     }
     
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-           
             db.delete(id: favoriteMovies[indexPath.row].id)
             favoriteMovies.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
