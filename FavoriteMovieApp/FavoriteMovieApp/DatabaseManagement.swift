@@ -27,19 +27,16 @@ class DatabaseManagement {
     }
 
     func createTable() {
-        // 1
         db = openDatabase()
         let createTableString = """
         CREATE TABLE IF NOT EXISTS Movies(
-        id TEXT PRIMARY KEY NOT NULL,
+        id TEXT Not Null,
         title TEXT,
         year TEXT,
         imageUrl TEXT);
         """
         var createTableStatement: OpaquePointer? = nil
-        // 2
         if sqlite3_prepare_v2(db, createTableString, -1, &createTableStatement, nil) == SQLITE_OK {
-            // 3
             if sqlite3_step(createTableStatement) == SQLITE_DONE {
                 print("Movies table created.")
             } else {
@@ -48,18 +45,17 @@ class DatabaseManagement {
         } else {
             print("CREATE TABLE statement could not be prepared.")
         }
-        // 4
         sqlite3_finalize(createTableStatement)
-        
+        sqlite3_close(db)
     }
     
     func insert(movie: Movie) {
         db = openDatabase()
        
-        let id: NSString = movie.id as NSString
-        let title: NSString = movie.title as NSString
-        let year: NSString = movie.year as NSString
-        let imageUrl: NSString = movie.imageUrl as NSString
+        let id = prepare(stringToInsert: movie.id)
+        let title = prepare(stringToInsert: movie.title)
+        let year = prepare(stringToInsert: movie.year)
+        let imageUrl = prepare(stringToInsert: movie.imageUrl)
         
         var insertStatement: OpaquePointer? = nil
         let insertStatementString = "INSERT INTO Movies (id, title, year, imageUrl) VALUES (?, ?, ?, ?);"
@@ -78,10 +74,8 @@ class DatabaseManagement {
                 print("error binding imageUrl")
             }
             
-
             if sqlite3_step(insertStatement) == SQLITE_DONE {
                 print("Successfully inserted row.")
-                  print(insertStatementString)
             } else {
                 print("Could not insert row.")
             }
@@ -89,8 +83,12 @@ class DatabaseManagement {
             print("INSERT statement could not be prepared.")
         }
     
-       
         sqlite3_finalize(insertStatement)
+        sqlite3_close(db)
+    }
+    
+    func prepare(stringToInsert: String) -> NSString {
+        return stringToInsert as NSString
     }
     
     func getAllQuery(tableName: String) -> [Movie] {
@@ -114,15 +112,17 @@ class DatabaseManagement {
                     movies.append(Movie(id: id, title: title, year: year, imageUrl: imageUrl))
                 }
         sqlite3_finalize(queryStatement)
-         //print("Id \(movies[0].id), title: \(movies[0].title), year: \(movies[0].year), imageUrl: \(movies[0].imageUrl)")
+        sqlite3_close(db)
         return movies
     }
     
     func delete(id: String) {
-        let deleteStatementStirng = "DELETE FROM Movies WHERE id == \(id);"
+
+        db = openDatabase()
+        let deleteStatementString = "DELETE FROM Movies WHERE id = '\(id)';"
 
         var deleteStatement: OpaquePointer? = nil
-        if sqlite3_prepare_v2(db, deleteStatementStirng, -1, &deleteStatement, nil) == SQLITE_OK {
+        if sqlite3_prepare_v2(db, deleteStatementString, -1, &deleteStatement, nil) == SQLITE_OK {
             if sqlite3_step(deleteStatement) == SQLITE_DONE {
                 print("Successfully deleted row.")
             } else {
@@ -131,8 +131,8 @@ class DatabaseManagement {
         } else {
             print("DELETE statement could not be prepared")
         }
-        
         sqlite3_finalize(deleteStatement)
+        sqlite3_close(db)
     }
 }
     

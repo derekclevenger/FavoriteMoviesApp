@@ -117,10 +117,9 @@ class FavoriteMoviesViewController: UIViewController, UITableViewDelegate, UITab
     
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            favoriteMovies.remove(at: indexPath.row)
-            //print(favoriteMovies[indexPath.row].id)
+           
             db.delete(id: favoriteMovies[indexPath.row].id)
-            print(favoriteMovies[indexPath.row].id)
+            favoriteMovies.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
         }
